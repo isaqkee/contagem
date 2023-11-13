@@ -6,37 +6,64 @@
     <title>Contador Simples</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-        #contador {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 50px;
+    background-color: #f5f5f5;
+}
 
-        #barraProgresso{
-            width: 400px;
-            height: 20px;
-            background-color: #eee;
-            margin: auto;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
+h1 {
+    color: #333;
+}
 
-        #progresso{
-            height: 100%;
-            width: 0;
-            background-color: #4CAF50;
-            border-radius: 10px;
-            transition: 1s linear;
-        }
+#contador {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#barraProgresso {
+    width: 400px;
+    height: 20px;
+    background-color: #eee;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#progresso {
+    height: 100%;
+    width: 0;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    transition: width 1s linear;
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
     </style>
 </head>
 <body>
     <h1>Contador com Botão</h1>
     <div id="contador">0</div>
+    <div id="barraProgresso">
+        <div id="progresso"></div>
+    </div>
 
     <button id="btnIniciar">Iniciar Contador</button>
     <button id="btnPausar">Pausar Contador</button>
@@ -50,10 +77,21 @@
         function atualizarContador() {
             contador++;
             document.getElementById('contador').textContent = contador;
-        }
+        
+        
+        progresso = (contador/10) * 100;
+        document.getElementById('progresso').style.width = progresso + '%';
+
+        if (contador === 10) {
+            pausarContador();
+        }}
 
         function iniciarContador() {
-           posicao = setInterval(atualizarContador, 1000);
+            if (contador === 10) {
+                reiniciarContador();
+            }else {
+                posicao = setInterval(atualizarContador, 1000);
+            }
         }
 
         function pausarContador() {
@@ -63,18 +101,17 @@
         function reiniciarContador() {
             pausarContador();
             contador = 0;
+            progresso = 0;
             document.getElementById('contador').textContent = contador;
+            document.getElementById('progresso').style.width= '0';
         }
 
         document.getElementById('btnIniciar').addEventListener('click', iniciarContador)
         document.getElementById('btnPausar').addEventListener('click', pausarContador)
         document.getElementById('btnReiniciar').addEventListener('click', reiniciarContador)
         iniciarContador();
-
-        document.getElementById('btnPausar').addEventListener('click', pausarContador);
         
-
-
+        
     </script>
 </body>
 </html>
